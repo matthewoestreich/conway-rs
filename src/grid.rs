@@ -68,10 +68,6 @@ impl Grid {
         Some(&mut self.cells[i])
     }
 
-    pub fn cell_center(&self, x: u32, y: u32) -> Vector2 {
-        Vector2::new(x as f32 + 0.5, y as f32 + 0.5)
-    }
-
     pub fn is_within_grid_bounds(&self, x: u32, y: u32) -> bool {
         x < self.cols && y < self.rows
     }
