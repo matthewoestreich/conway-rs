@@ -66,9 +66,9 @@ fn main() {
         }
 
         if rl.is_mouse_button_pressed(MouseButton::MOUSE_BUTTON_LEFT)
-            && let Some(pos) = renderer.viewport.world_to_cell(rl.get_mouse_position())
+            && let Some(position) = renderer.viewport.world_to_cell(rl.get_mouse_position())
         {
-            conway.clicked_coords(pos.x, pos.y);
+            conway.clicked(position);
         }
 
         let mut d = rl.begin_drawing(&thread);

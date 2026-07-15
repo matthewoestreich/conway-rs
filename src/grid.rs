@@ -84,13 +84,8 @@ impl Grid {
 
         for y in (pos_y - 1)..=(pos_y + 1) {
             for x in (pos_x - 1)..=(pos_x + 1) {
-                if (y == pos_y && x == pos_x)
-                    || x < 0
-                    || y < 0
-                    || x >= self.cols as isize
-                    || y >= self.rows as isize
-                {
-                    continue;
+                if y == pos_y && x == pos_x {
+                    continue; // Don't count ourself
                 }
 
                 if let Some(cell) = self.get_cell(x as u32, y as u32)

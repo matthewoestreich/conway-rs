@@ -1,4 +1,5 @@
 use crate::grid::Grid;
+use raylib::ffi::Vector2;
 
 pub struct Conway {
     update_interval: f32,
@@ -15,8 +16,8 @@ impl Conway {
         }
     }
 
-    pub fn clicked_coords(&mut self, x: f32, y: f32) {
-        if let Some(cell) = self.grid.get_cell_mut(x as u32, y as u32) {
+    pub fn clicked(&mut self, position: Vector2) {
+        if let Some(cell) = self.grid.get_cell_mut(position.x as u32, position.y as u32) {
             cell.alive = !cell.alive;
         };
     }
