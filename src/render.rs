@@ -69,13 +69,13 @@ impl Renderer {
         Self { viewport }
     }
 
-    pub fn draw(&mut self, d: &mut RaylibDrawHandle, conway: &mut Conway) {
-        self.draw_cells(d, conway.grid_mut());
+    pub fn draw(&self, d: &mut RaylibDrawHandle, conway: &mut Conway) {
+        self.draw_cells(d, conway.grid());
         self.draw_grid_borders(d);
     }
 
-    fn draw_cells(&mut self, d: &mut RaylibDrawHandle, grid: &mut Grid) {
-        for cell in grid.iter_mut() {
+    fn draw_cells(&self, d: &mut RaylibDrawHandle, grid: &Grid) {
+        for cell in grid.iter() {
             let color = if cell.alive {
                 Color::WHITE
             } else {
@@ -94,7 +94,7 @@ impl Renderer {
         }
     }
 
-    fn draw_grid_borders(&mut self, d: &mut RaylibDrawHandle) {
+    fn draw_grid_borders(&self, d: &mut RaylibDrawHandle) {
         let thickness = 1.0;
         let line_color = Color::GREY; //Color::new(80, 80, 80, 255);
         let width = self.viewport.cols as f32 * self.viewport.cell_size.x;

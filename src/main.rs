@@ -42,13 +42,25 @@ fn main() {
         //fast_forward_speed: 5,
     };
 
-    let viewport = Viewport::new(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT, COLS, ROWS);
-    let mut renderer = Renderer::new(viewport);
+    let renderer = Renderer::new(Viewport::new(
+        0,
+        0,
+        VIEWPORT_WIDTH,
+        VIEWPORT_HEIGHT,
+        COLS,
+        ROWS,
+    ));
 
-    let grid = Grid::new(COLS, ROWS);
-    let mut conway = Conway::new(UPDATE_INTERVAL_SECS, grid);
+    let mut conway = Conway::new(UPDATE_INTERVAL_SECS, Grid::new(COLS, ROWS));
 
     while !rl.window_should_close() {
+        if app_state.is_paused {
+            rl.set_window_title(&thread, "Conway PRESS SPACE TO UNPAUSE");
+        } else {
+            rl.set_window_title(&thread, "Conway");
+            conway.update(rl.get_frame_time());
+        }
+
         if rl.is_key_pressed(KeyboardKey::KEY_SPACE) {
             app_state.is_paused = !app_state.is_paused;
         }
@@ -59,19 +71,9 @@ fn main() {
             conway.clicked_coords(pos.x, pos.y);
         }
 
-        let dt = rl.get_frame_time();
-
         let mut d = rl.begin_drawing(&thread);
         d.clear_background(BACKGROUND_COLOR);
 
-        if !app_state.is_paused {
-            conway.update(dt);
-        }
-
         renderer.draw(&mut d, &mut conway);
-
-        if app_state.is_paused {
-            d.draw_text("PRESS SPACE TO UNPAUSE", 0, 0, 10, Color::RED);
-        }
     }
 }

@@ -21,8 +21,8 @@ impl Conway {
         };
     }
 
-    pub fn grid_mut(&mut self) -> &mut Grid {
-        &mut self.grid
+    pub fn grid(&mut self) -> &Grid {
+        &self.grid
     }
 
     pub fn update(&mut self, delta_time: f32) {
@@ -32,9 +32,9 @@ impl Conway {
             return;
         }
 
-        let mut next = self.grid.clone();
+        let mut next_grid = self.grid.clone();
 
-        next.iter_mut().for_each(|cell| {
+        next_grid.iter_mut().for_each(|cell| {
             let alive_neighbors = self.grid.alive_neighbors_len(cell.vector2());
 
             if cell.alive {
@@ -44,7 +44,7 @@ impl Conway {
             }
         });
 
-        self.grid = next;
+        self.grid = next_grid;
         self.timer = self.update_interval;
     }
 }

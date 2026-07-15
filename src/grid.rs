@@ -126,11 +126,7 @@ impl Cell {
     }
 
     pub fn new_with_coords(x: u32, y: u32) -> Self {
-        Self {
-            x,
-            y,
-            ..Self::default()
-        }
+        Self { x, y, alive: false }
     }
 
     pub fn vector2(&self) -> Vector2 {
